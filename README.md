@@ -4,6 +4,7 @@
 
 [![Stars](https://img.shields.io/docker/stars/travix/gocd-server.svg)](https://hub.docker.com/r/travix/gocd-server/)
 [![Pulls](https://img.shields.io/docker/pulls/travix/gocd-server.svg)](https://hub.docker.com/r/travix/gocd-server/)
+[![License](https://img.shields.io/github/license/Travix-International/docker-gocd-server.svg)](https://github.com/Travix-International/docker-gocd-server/blob/master/LICENSE)
 
 # Usage
 
