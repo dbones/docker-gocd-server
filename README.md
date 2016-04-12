@@ -1,3 +1,10 @@
+# travix/gocd-server
+
+Go.CD continuous delivery server
+
+[![Stars](https://img.shields.io/docker/stars/travix/gocd-server.svg)](https://hub.docker.com/r/travix/gocd-server/)
+[![Pulls](https://img.shields.io/docker/pulls/travix/gocd-server.svg)](https://hub.docker.com/r/travix/gocd-server/)
+
 # Usage
 
 To run this docker container use the following command
