@@ -32,8 +32,8 @@ EXPOSE 8153 8154
 # define default command
 CMD groupmod -g ${GROUP_ID} ${GROUP_NAME}; \
     usermod -g ${GROUP_ID} -u ${USER_ID} ${USER_NAME}; \
-    chown ${USER_NAME}:${GROUP_NAME} /var/lib/go-server /var/lib/go-server/artifacts /var/lib/go-server/db /var/lib/go-server/db/h2db; \
-    chown -R ${USER_NAME}:${GROUP_NAME} /var/lib/go-server/plugins /var/log/go-server /etc/go; \
+    chown ${USER_NAME}:${GROUP_NAME} /var/lib/go-server /var/lib/go-server/artifacts; \
+    chown -R ${USER_NAME}:${GROUP_NAME}  /var/lib/go-server/db /var/lib/go-server/plugins /var/log/go-server /etc/go; \
     (/bin/su - ${USER_NAME} -c "GC_LOG=$GC_LOG JVM_DEBUG=$JVM_DEBUG SERVER_MEM=$SERVER_MEM SERVER_MAX_MEM=$SERVER_MAX_MEM SERVER_MIN_PERM_GEN=$SERVER_MIN_PERM_GEN SERVER_MAX_PERM_GEN=$SERVER_MAX_PERM_GEN /usr/share/go-server/server.sh &"); \
     until curl -s -o /dev/null 'http://localhost:8153'; \
         do sleep 1; \
