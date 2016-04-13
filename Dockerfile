@@ -15,7 +15,9 @@ RUN groupadd -r -g $GROUP_ID $GROUP_NAME \
     && curl -fSL "https://download.go.cd/binaries/$GO_VERSION/deb/go-server-$GO_VERSION.deb" -o go-server.deb \
     && dpkg -i go-server.deb \
     && rm -rf go-server.db \
-    && sed -i -e "s/DAEMON=Y/DAEMON=N/" /etc/default/go-server
+    && sed -i -e "s/DAEMON=Y/DAEMON=N/" /etc/default/go-server \
+    && mkdir -p /var/lib/go-server/plugins/external \
+    && curl -fSL "https://github.com/srinivasupadhya/gocd-oauth-login/releases/download/v1.2/google-oauth-login-1.2.jar" -o /var/lib/go-server/plugins/external/google-oauth-login-1.2.jar
 
 # runtime environment variables
 ENV AGENT_KEY="" \
