@@ -51,6 +51,10 @@ then
 
 fi
 
+if [ "${JMX_ENABLE}" != "" ]; then
+  sed -i -e 's:-jar $SERVER_DIR/go.jar:-Dcom.sun.management.jmx -jar $SERVER_DIR/go.jar:' /usr/share/go-server/server.sh;
+fi
+
 # start go.cd server as go user
 (/bin/su - ${USER_NAME} -c "GC_LOG=$GC_LOG JVM_DEBUG=$JVM_DEBUG SERVER_MEM=$SERVER_MEM SERVER_MAX_MEM=$SERVER_MAX_MEM SERVER_MIN_PERM_GEN=$SERVER_MIN_PERM_GEN SERVER_MAX_PERM_GEN=$SERVER_MAX_PERM_GEN /usr/share/go-server/server.sh &")
 

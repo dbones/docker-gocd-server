@@ -23,6 +23,7 @@ RUN groupadd -r -g $GROUP_ID $GROUP_NAME \
 ENV AGENT_KEY="" \
     GC_LOG="" \
     JVM_DEBUG="" \
+    JMX_ENABLE="" \
     SERVER_MAX_MEM=1024m \
     SERVER_MAX_PERM_GEN=256m \
     SERVER_MEM=512m \
