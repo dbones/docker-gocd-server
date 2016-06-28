@@ -36,7 +36,7 @@ then
   chown -R ${USER_NAME}:${GROUP_NAME} /etc/go;
 fi
 
-if [ -d "/var/go/.ssh" ] && [ find "/var/go/.ssh" -mindepth 1 -print -quit | grep -q . ];
+if [ -d "/var/go/.ssh" ] && test "$(ls -A "/var/go/.ssh")"
 then
   chown -R ${USER_NAME}:${GROUP_NAME} /var/go/.ssh || echo "No write permissions for /var/go/.ssh";
 
