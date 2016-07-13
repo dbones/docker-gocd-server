@@ -2,8 +2,8 @@
 set -e
 
 # set user and group
-groupmod -g ${GROUP_ID} ${GROUP_NAME};
-usermod -g ${GROUP_ID} -u ${USER_ID} ${USER_NAME};
+groupmod -g ${GROUP_ID} ${GROUP_NAME}
+usermod -g ${GROUP_ID} -u ${USER_ID} ${USER_NAME}
 
 # chown directories that might have been mounted as volume and thus still have root as owner
 if [ -d "/var/lib/go-server" ]
