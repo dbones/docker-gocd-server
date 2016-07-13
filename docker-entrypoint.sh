@@ -65,13 +65,9 @@ fi
 if [ -d "/var/go/.ssh" ]
 then
 
-  ls -latr /var/go/.ssh
-
   # make sure ssh keys mounted from kubernetes secret have correct permissions
   echo "Setting owner for /var/go/.ssh..."
   chmod 400 /var/go/.ssh/* || echo "Could not write permissions for /var/go/.ssh/*"
-
-  ls -latr /var/go/.ssh
 
   # rename ssh keys to deal with kubernetes secret name restrictions
   cd /var/go/.ssh
