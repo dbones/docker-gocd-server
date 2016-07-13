@@ -36,12 +36,16 @@ then
   chown -R ${USER_NAME}:${GROUP_NAME} /etc/go;
 fi
 
-if [ -d "/var/go/.ssh" ] && test "$(ls -A "/var/go/.ssh")"
+if [ -d "/var/go" ];
 then
-  chown -R ${USER_NAME}:${GROUP_NAME} /var/go/.ssh || echo "No write permissions for /var/go/.ssh";
+  chown -R ${USER_NAME}:${GROUP_NAME} /var/go || echo "No write permissions";
+fi
+
+if [ -d "/var/go/.ssh" ]
+then
 
   # make sure ssh keys mounted from kubernetes secret have correct permissions
-  chmod 400 /var/go/.ssh/* || echo "No write permissions for /var/go/.ssh";
+  chmod 400 /var/go/.ssh/* || echo "Could not write permissions for /var/go/.ssh/*";
 
   # rename ssh keys to deal with kubernetes secret name restrictions
   cd /var/go/.ssh;
