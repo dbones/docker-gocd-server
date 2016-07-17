@@ -9,6 +9,14 @@ ENV GO_VERSION=16.6.0-3590 \
     GROUP_NAME=go \
     GROUP_ID=999
 
+# install dependencies
+RUN echo "deb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list.d/jessie-backports.list \
+    && apt-get update \
+    && apt-get install -y \
+        apache2-utils \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # install go server
 RUN groupadd -r -g $GROUP_ID $GROUP_NAME \
     && useradd -r -g $GROUP_NAME -u $USER_ID -d /var/go $USER_NAME \
@@ -26,7 +34,8 @@ ENV AGENT_KEY="" \
     SERVER_MAX_MEM=1024m \
     SERVER_MAX_PERM_GEN=256m \
     SERVER_MEM=512m \
-    SERVER_MIN_PERM_GEN=128m
+    SERVER_MIN_PERM_GEN=128m \
+    USER_AUTH=""
 
 # expose ports
 EXPOSE 8153 8154

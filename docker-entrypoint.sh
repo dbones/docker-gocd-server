@@ -83,6 +83,21 @@ else
   echo "Directory /var/go/.ssh does not exist"
 fi
 
+if [ "${USER_AUTH}" != "" ]
+then
+  echo "Creating htpasswd file at location /etc/gocd-auth"
+  touch /etc/gocd-auth
+
+  for auth in $USER_AUTH
+  do
+    values=$(echo $auth | tr ":" "\n")
+    user=$(echo "$values" | head -n1)
+    pass=$(echo "$values" | tail -n1)
+    htpasswd -sb /etc/gocd-auth $user $pass
+    echo "User \"${user}\" created"
+  done
+fi
+
 # start go.cd server as go user
 echo "Starting go.cd server..."
 (/bin/su - ${USER_NAME} -c "GC_LOG=$GC_LOG JVM_DEBUG=$JVM_DEBUG SERVER_MEM=$SERVER_MEM SERVER_MAX_MEM=$SERVER_MAX_MEM SERVER_MIN_PERM_GEN=$SERVER_MIN_PERM_GEN SERVER_MAX_PERM_GEN=$SERVER_MAX_PERM_GEN /usr/share/go-server/server.sh &")
