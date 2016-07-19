@@ -83,6 +83,10 @@ else
   echo "Directory /var/go/.ssh does not exist"
 fi
 
+# update config to point to set the internal ports
+sed -i -e "s/GO_SERVER_PORT=8153/GO_SERVER_PORT=${GO_SERVER_PORT}/" /etc/default/go-server
+sed -i -e "s/GO_SERVER_SSL_PORT=8154/GO_SERVER_SSL_PORT=${GO_SERVER_SSL_PORT}/" /etc/default/go-server
+
 # start go.cd server as go user
 echo "Starting go.cd server..."
 (/bin/su - ${USER_NAME} -c "GC_LOG=$GC_LOG JVM_DEBUG=$JVM_DEBUG SERVER_MEM=$SERVER_MEM SERVER_MAX_MEM=$SERVER_MAX_MEM SERVER_MIN_PERM_GEN=$SERVER_MIN_PERM_GEN SERVER_MAX_PERM_GEN=$SERVER_MAX_PERM_GEN /usr/share/go-server/server.sh &")
