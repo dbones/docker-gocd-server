@@ -30,6 +30,7 @@ In order to configure the server with other than default settings you can pass i
 | SERVER_MAX_MEM      | The -Xmx value for the java vm                                         | 1024m         |
 | SERVER_MIN_PERM_GEN | The -XX:PermSize value for the java vm                                 | 128m          |
 | SERVER_MAX_PERM_GEN | The -XX:MaxPermSize value for the java vm                              | 256m          |
+| USER_AUTH           | Space separated list of user:password                                  |               |
 
 For setting up autoregistration for agents pass in the AGENT_KEY environment variable with a secret value
 
@@ -94,3 +95,17 @@ chown -R go:go /mnt/persistent-disk/gocd-server/ssh
 # Port offloading
 
 Running gocd server on port 80 and 443 causes the agent to fail connecting to the server, see https://github.com/gocd/gocd/issues/1459. So for serving gocd server on port 80 and 443 it's best to use a proxy in front of it, see http://www.go.cd/documentation/user/current/installation/configure_proxy.html.
+
+# Setup authentication
+
+The simplest way to authenticate people is to create a password file for Go to use. Set USER_AUTH environment variable with a list of user:password variable, it will create a htpasswd file located in __/etc/gocd-auth__, then in the GoCD Server
+configuration page, enter the path __/etc/gocd-auth__ in the "Password File Path" field.
+
+```sh
+docker run -d \
+    -p 8153:8153 \
+    -p 8154:8154 \
+    -e "AGENT_KEY=388b633a88de126531afa41eff9aa69e" \
+    -e "USER_AUTH=user1:pass1 user2:pass2 user3:pass3" \
+    travix/gocd-server:latest
+```

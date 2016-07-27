@@ -94,6 +94,21 @@ else
   echo "Directory /var/go/.ssh does not exist"
 fi
 
+if [ "${USER_AUTH}" != "" ]
+then
+  echo "Creating htpasswd file at location /etc/gocd-auth"
+  touch /etc/gocd-auth
+
+  for auth in $USER_AUTH
+  do
+    values=$(echo $auth | tr ":" "\n")
+    user=$(echo "$values" | head -n1)
+    pass=$(echo "$values" | tail -n1)
+    htpasswd -sb /etc/gocd-auth $user $pass
+    echo "User \"${user}\" created"
+  done
+fi
+
 # update config to point to set the internal ports
 sed -i -e "s/GO_SERVER_PORT=8153/GO_SERVER_PORT=${GO_SERVER_PORT}/" /etc/default/go-server
 sed -i -e "s/GO_SERVER_SSL_PORT=8154/GO_SERVER_SSL_PORT=${GO_SERVER_SSL_PORT}/" /etc/default/go-server
