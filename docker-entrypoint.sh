@@ -161,4 +161,4 @@ then
   sed -i -e 's/agentAutoRegisterKey="[^"]*" *//' -e 's#\(<server\)\(.*artifactsdir.*\)#\1 agentAutoRegisterKey="'$AGENT_KEY'"\2#' /etc/go/cruise-config.xml
 fi
 
-(/bin/su - ${USER_NAME} -c "wait")
+wait
