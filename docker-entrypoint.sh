@@ -162,3 +162,5 @@ fi
 
 # wait for /bin/su process, so container fails if server fails
 wait $supid
+
+echo "Go.cd server stopped"
