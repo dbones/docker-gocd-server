@@ -164,3 +164,4 @@ fi
 wait $supid
 
 echo "Go.cd server stopped"
+ps
