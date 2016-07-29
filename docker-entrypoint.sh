@@ -17,12 +17,12 @@ log4j.logger.com.thoughtworks.go.server.Rails=WARN
 log4j.logger.org.springframework=WARN
 log4j.logger.org.apache.velocity=WARN
 
-# Rolling log file output...
+# console output...
 log4j.appender.ConsoleAppender=org.apache.log4j.ConsoleAppender
 log4j.appender.ConsoleAppender.layout=org.apache.log4j.PatternLayout
 log4j.appender.ConsoleAppender.layout.conversionPattern=%d{ISO8601} %5p [%t] %c{1}:%L - %m%n
 
-# Rolling log file output for shine...
+# console output for shine...
 log4j.appender.ShineConsoleAppender=org.apache.log4j.ConsoleAppender
 log4j.appender.ShineConsoleAppender.layout=org.apache.log4j.PatternLayout
 log4j.appender.ShineConsoleAppender.layout.conversionPattern=%d{ISO8601} %5p [%t] %c{1}:%L - %m%n
@@ -160,4 +160,5 @@ then
   sed -i -e 's/agentAutoRegisterKey="[^"]*" *//' -e 's#\(<server\)\(.*artifactsdir.*\)#\1 agentAutoRegisterKey="'$AGENT_KEY'"\2#' /etc/go/cruise-config.xml
 fi
 
+# wait for /bin/su process, so container fails if server fails
 wait $supid
