@@ -20,7 +20,7 @@ RUN echo "deb http://http.debian.net/debian jessie-backports main" | tee /etc/ap
 # install go server
 RUN groupadd -r -g $GROUP_ID $GROUP_NAME \
     && useradd -r -g $GROUP_NAME -u $USER_ID -d /var/go $USER_NAME \
-    && curl -fSL "https://download.go.cd/binaries/$GO_VERSION/deb/go-server-$GO_VERSION.deb" -o go-server.deb \
+    && curl -fSL "https://download.go.cd/binaries/${GO_VERSION}/deb/go-server_${GO_VERSION}_all.deb" -o go-server.deb \
     && dpkg -i go-server.deb \
     && rm -rf go-server.db \
     && sed -i -e "s/DAEMON=Y/DAEMON=N/" /etc/default/go-server \
