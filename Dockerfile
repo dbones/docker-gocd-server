@@ -3,7 +3,7 @@ FROM travix/base-debian-git-jre8:latest
 MAINTAINER Travix
 
 # build time environment variables
-ENV GO_VERSION=16.6.0-3590 \
+ENV GO_VERSION=16.7.0-3819 \
     USER_NAME=go \
     USER_ID=999 \
     GROUP_NAME=go \
@@ -26,7 +26,6 @@ RUN groupadd -r -g $GROUP_ID $GROUP_NAME \
     && sed -i -e "s/DAEMON=Y/DAEMON=N/" /etc/default/go-server \
     && mkdir -p /var/lib/go-server/plugins/external \
     && curl -fSL "https://github.com/gocd-contrib/gocd-oauth-login/releases/download/v1.2/google-oauth-login-1.2.jar" -o /var/lib/go-server/plugins/external/google-oauth-login-1.2.jar \
-    && curl -fSL "https://github.com/gocd-contrib/email-notifier/releases/download/v0.1/email-notifier-0.1.jar" -o /var/lib/go-server/plugins/external/email-notifier-0.1.jar \
     && curl -fSL "https://github.com/ashwanthkumar/gocd-slack-build-notifier/releases/download/v1.4.0-RC6/gocd-slack-notifier-1.4.0-RC6.jar" -o /var/lib/go-server/plugins/external/gocd-slack-notifier-1.4.0-RC6.jar
 
 # runtime environment variables
