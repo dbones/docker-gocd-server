@@ -14,8 +14,6 @@ log4j.logger.com.thoughtworks.go=INFO
 log4j.logger.com.thoughtworks.studios.shine=WARN,ShineConsoleAppender
 log4j.logger.com.thoughtworks.go.server.Rails=WARN
 
-#log4j.logger.org.eclipse.jetty.server.RequestLog=INFO, WebRequestsConsoleAppender
-
 log4j.logger.org.springframework=WARN
 log4j.logger.org.apache.velocity=WARN
 
@@ -23,11 +21,6 @@ log4j.logger.org.apache.velocity=WARN
 log4j.appender.ConsoleAppender=org.apache.log4j.ConsoleAppender
 log4j.appender.ConsoleAppender.layout=org.apache.log4j.PatternLayout
 log4j.appender.ConsoleAppender.layout.conversionPattern=%d{ISO8601} %5p [%t] %c{1}:%L - %m%n
-
-#Rolling log file output for web requests
-log4j.appender.WebRequestsConsoleAppender=org.apache.log4j.ConsoleAppender
-log4j.appender.WebRequestsConsoleAppender.layout=org.apache.log4j.PatternLayout
-log4j.appender.WebRequestsConsoleAppender.layout.conversionPattern=%d{ISO8601} %5p [%t] %c{1}:%L - %m%n
 
 # Rolling log file output for shine...
 log4j.appender.ShineConsoleAppender=org.apache.log4j.ConsoleAppender
@@ -145,7 +138,11 @@ sed -i -e "s/GO_SERVER_SSL_PORT=8154/GO_SERVER_SSL_PORT=${GO_SERVER_SSL_PORT}/" 
 
 # start go.cd server as go user
 echo "Starting go.cd server..."
-(/bin/su - ${USER_NAME} -c "GC_LOG=$GC_LOG JVM_DEBUG=$JVM_DEBUG SERVER_MEM=$SERVER_MEM SERVER_MAX_MEM=$SERVER_MAX_MEM SERVER_MIN_PERM_GEN=$SERVER_MIN_PERM_GEN SERVER_MAX_PERM_GEN=$SERVER_MAX_PERM_GEN /usr/share/go-server/server.sh &")
+/bin/su - ${USER_NAME} -c "GC_LOG=$GC_LOG JVM_DEBUG=$JVM_DEBUG SERVER_MEM=$SERVER_MEM SERVER_MAX_MEM=$SERVER_MAX_MEM SERVER_MIN_PERM_GEN=$SERVER_MIN_PERM_GEN SERVER_MAX_PERM_GEN=$SERVER_MAX_PERM_GEN /usr/share/go-server/server.sh" &
+
+supid=$!
+
+echo "Go.cd server pid: $supid"
 
 # wait until server is up and running
 echo "Waiting for go.cd server to be ready..."
@@ -154,6 +151,8 @@ do
   sleep 1
 done
 
+echo "Go.cd server is ready"
+
 # set agent key in cruise-config.xml
 if [ -n "$AGENT_KEY" ]
 then
@@ -161,4 +160,4 @@ then
   sed -i -e 's/agentAutoRegisterKey="[^"]*" *//' -e 's#\(<server\)\(.*artifactsdir.*\)#\1 agentAutoRegisterKey="'$AGENT_KEY'"\2#' /etc/go/cruise-config.xml
 fi
 
-wait
+wait $supid
