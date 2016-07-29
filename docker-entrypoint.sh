@@ -5,36 +5,6 @@ set -e
 groupmod -g ${GROUP_ID} ${GROUP_NAME}
 usermod -g ${GROUP_ID} -u ${USER_ID} ${USER_NAME}
 
-# log to std out instead of file
-cat >/etc/go/log4j.properties <<EOL
-log4j.rootLogger=WARN, ConsoleAppender
-log4j.logger.com.thoughtworks.go=INFO
-
-# turn on all shine logging
-log4j.logger.com.thoughtworks.studios.shine=WARN,ShineConsoleAppender
-log4j.logger.com.thoughtworks.go.server.Rails=WARN
-
-#log4j.logger.org.eclipse.jetty.server.RequestLog=INFO, WebRequestsConsoleAppender
-
-log4j.logger.org.springframework=WARN
-log4j.logger.org.apache.velocity=WARN
-
-# Rolling log file output...
-log4j.appender.ConsoleAppender=org.apache.log4j.ConsoleAppender
-log4j.appender.ConsoleAppender.layout=org.apache.log4j.PatternLayout
-log4j.appender.ConsoleAppender.layout.conversionPattern=%d{ISO8601} %5p [%t] %c{1}:%L - %m%n
-
-#Rolling log file output for web requests
-log4j.appender.WebRequestsConsoleAppender=org.apache.log4j.ConsoleAppender
-log4j.appender.WebRequestsConsoleAppender.layout=org.apache.log4j.PatternLayout
-log4j.appender.WebRequestsConsoleAppender.layout.conversionPattern=%d{ISO8601} %5p [%t] %c{1}:%L - %m%n
-
-# Rolling log file output for shine...
-log4j.appender.ShineConsoleAppender=org.apache.log4j.ConsoleAppender
-log4j.appender.ShineConsoleAppender.layout=org.apache.log4j.PatternLayout
-log4j.appender.ShineConsoleAppender.layout.conversionPattern=%d{ISO8601} %5p [%t] %c{1}:%L - %m%n
-EOL
-
 # chown directories that might have been mounted as volume and thus still have root as owner
 if [ -d "/var/lib/go-server" ]
 then
@@ -161,4 +131,5 @@ then
   sed -i -e 's/agentAutoRegisterKey="[^"]*" *//' -e 's#\(<server\)\(.*artifactsdir.*\)#\1 agentAutoRegisterKey="'$AGENT_KEY'"\2#' /etc/go/cruise-config.xml
 fi
 
-(/bin/su - ${USER_NAME} -c "wait")
+# tail logs, to be replaced with logs that automatically go to stdout/stderr so go.cd crashing will crash the container
+/bin/su - ${USER_NAME} -c "exec tail -F /var/log/go-server/*"
