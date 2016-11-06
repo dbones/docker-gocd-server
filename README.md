@@ -1,6 +1,6 @@
 # dbones/gocd-server
 
-mainly wanted to have docker support in the server
+mainly wanted to have docker support in the server.
 
 
 ## BASED off travix/gocd-server
