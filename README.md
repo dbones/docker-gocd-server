@@ -1,4 +1,9 @@
-# travix/gocd-server
+# dbones/gocd-server
+
+mainly wanted to have docker support in the server
+
+
+## BASED off travix/gocd-server
 
 [Go.CD](https://www.go.cd/) continuous delivery server
 
