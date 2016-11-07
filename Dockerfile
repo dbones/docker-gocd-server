@@ -3,7 +3,7 @@ FROM travix/base-debian-git-jre8:latest
 MAINTAINER dbones
 
 # build time environment variables
-ENV GO_VERSION=16.11.0-4185 \
+ENV GO_VERSION=16.5.0 \
     USER_NAME=go \
     USER_ID=999 \
     GROUP_NAME=go \
