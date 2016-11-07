@@ -27,7 +27,10 @@ RUN groupadd -r -g $GROUP_ID $GROUP_NAME \
     && mkdir -p /var/lib/go-server/plugins/external \
     && curl -fSL "https://github.com/gocd-contrib/gocd-oauth-login/releases/download/v1.2/google-oauth-login-1.2.jar" -o /var/lib/go-server/plugins/external/google-oauth-login-1.2.jar \
     && curl -fSL "https://github.com/ashwanthkumar/gocd-slack-build-notifier/releases/download/v1.4.0-RC6/gocd-slack-notifier-1.4.0-RC6.jar" -o /var/lib/go-server/plugins/external/gocd-slack-notifier-1.4.0-RC6.jar \
+    && curl -fSL "https://github.com/tomzo/gocd-json-config-plugin/releases/download/0.2.0/json-config-plugin-0.2.jar" -o /var/lib/go-server/plugins/external/json-config-plugin-0.2.jar \
     && curl -fSL "https://bintray.com/manuelkasiske/maven/download_file?file_path=com%2Fbraindrainpain%2Fdocker-material-poller%2F0.0.4%2Fdocker-material-poller-0.0.4.jar" -o /var/lib/go-server/plugins/external/docker-material-poller-0.0.4.jar 
+
+
 
 # runtime environment variables
 ENV AGENT_KEY="" \
