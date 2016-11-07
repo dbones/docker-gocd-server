@@ -1,6 +1,6 @@
 FROM travix/base-debian-git-jre8:latest
 
-MAINTAINER Travix
+MAINTAINER dbones
 
 # build time environment variables
 ENV GO_VERSION=16.11.0-4185 \
